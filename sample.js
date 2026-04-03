@@ -1,15 +1,3 @@
-/* ============================================================
-   GALAXY DEFENDER & PROJECT UTILITIES
-   Unified Professional Logic Structure
-   ============================================================ */
-
-// ===== DOM UTILITY FUNCTIONS =====
-
-/**
- * Shorthand for document.getElementById
- * @param {string} id 
- * @returns {HTMLElement | null}
- */
 function getElem(id) {
     const el = document.getElementById(id);
     if (!el) {
@@ -18,40 +6,21 @@ function getElem(id) {
     return el;
 }
 
-/**
- * Gets number from an input field
- * @param {string} id 
- * @returns {number}
- */
 function getValAsNumber(id) {
     const el = getElem(id);
     return el ? parseFloat(el.value) || 0 : 0;
 }
 
-/**
- * Gets string value from an input field
- * @param {string} id 
- * @returns {string}
- */
 function getValAsString(id) {
     const el = getElem(id);
     return el ? el.value.trim() : "";
 }
-
-
-// ===== GLOBAL STATE / STORAGE =====
 
 let globalRunningSum = 0;
 let dataStoreArray = [];
 const randomNumbersList = [];
 const TOTAL_RANDOM_COUNT = 50;
 
-
-// ===== GAME LOGIC: UI FLOW =====
-
-/**
- * Transitions from the start screen to the main game area
- */
 function startGame() {
     const startScreen = getElem('startScreen');
     const gameArea = getElem('gameArea');
@@ -59,16 +28,9 @@ function startGame() {
     if (startScreen && gameArea) {
         startScreen.classList.add('hidden');
         gameArea.classList.remove('hidden');
-        console.log("Game started!");
     }
 }
 
-
-// ===== UTILITY LOGIC: CALCULATORS & FORMATTERS =====
-
-/**
- * Calculates sum of two numbers and displays it
- */
 function calculateSum() {
     const num1 = getValAsNumber('inputNumber1');
     const num2 = getValAsNumber('inputNumber2');
@@ -78,9 +40,6 @@ function calculateSum() {
     if (display) display.innerText = sum;
 }
 
-/**
- * Compares two strings for equality (case-insensitive)
- */
 function calculateequal() {
     const str1 = getValAsString('inputNumber3').toLowerCase();
     const str2 = getValAsString('inputNumber4').toLowerCase();
@@ -91,9 +50,6 @@ function calculateequal() {
     }
 }
 
-/**
- * Capitalizes the first letter of every word in a string
- */
 function firstCapital() {
     const text = getValAsString('inputNumber5');
     const display = getElem('subtotal3');
@@ -112,9 +68,6 @@ function firstCapital() {
     display.innerText = capitalizedText;
 }
 
-/**
- * Adds the last digit of an input to a running total
- */
 function enterSum() {
     const rawVal = getValAsString('inputNumber6');
     const lastDigit = Number(rawVal.slice(-1));
@@ -126,12 +79,6 @@ function enterSum() {
     }
 }
 
-
-// ===== UTILITY LOGIC: GRADING & CLASSIFICATION =====
-
-/**
- * Converts a numeric score to a letter grade
- */
 function markGrade() {
     const score = getValAsNumber('inputNumber7');
     const display = getElem('subtotal5');
@@ -147,9 +94,6 @@ function markGrade() {
     display.innerText = grade;
 }
 
-/**
- * Maps shortcodes to full job titles
- */
 function findWho() {
     const code = getValAsString('inputNumber8').toLowerCase();
     const display = getElem('subtotal6');
@@ -167,12 +111,6 @@ function findWho() {
     display.innerText = roleMap[code] || "Key word not recognized";
 }
 
-
-// ===== UTILITY LOGIC: DATA & COLLECTIONS =====
-
-/**
- * Pushes input value to the store and clears input
- */
 function pushToArray() {
     const val = getValAsString('inputNumber9');
     if (val) {
@@ -182,17 +120,11 @@ function pushToArray() {
     }
 }
 
-/**
- * Displays the current contents of the store
- */
 function showArray() {
     const display = getElem('subtotal7');
     if (display) display.innerText = dataStoreArray.join(', ');
 }
 
-/**
- * Generates initial random numbers on load
- */
 function initRandomPool() {
     for (let i = 0; i < TOTAL_RANDOM_COUNT; i++) {
         const num = Math.floor(Math.random() * 100) + 1;
@@ -202,9 +134,6 @@ function initRandomPool() {
     if (input) input.value = randomNumbersList.join(', ');
 }
 
-/**
- * Filters the random pool by a divisor
- */
 function generateNumbers() {
     const divisor = getValAsNumber('inputNumber11');
     const display = getElem('subtotal8');
@@ -215,24 +144,12 @@ function generateNumbers() {
     display.innerText = filtered.join(', ');
 }
 
-
-// ===== INITIALIZATION & EVENTS =====
-
-/**
- * Setup event listeners and handle initial load tasks
- */
 function init() {
-    // 1. Setup Start Screen logic
     const startBtn = getElem('startBtn');
     if (startBtn) {
         startBtn.addEventListener('click', startGame);
     }
-
-    // 2. Initialize Utility Data
     initRandomPool();
-
-    console.log("System initialized and ready.");
 }
 
-// Run on page load
 window.addEventListener('DOMContentLoaded', init);
