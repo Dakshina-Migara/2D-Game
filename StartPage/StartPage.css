@@ -1,0 +1,124 @@
+:root {
+    --cyan: #00e5ff;
+    --pink: #ff2d75;
+    --bg: #050a18;
+    --text: #e0f7fa;
+    --text-dim: #80deea;
+    --glass-bg: rgba(8, 16, 40, 0.75);
+    --glass-border: rgba(0, 229, 255, 0.2);
+}
+
+body {
+    background: var(--bg);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    user-select: none;
+    overflow: hidden;
+}
+
+.text-dim {
+    color: var(--text-dim) !important;
+}
+
+.start-screen {
+    z-index: 10;
+}
+
+.start-content-card {
+    position: relative;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title-main {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    background: linear-gradient(135deg, var(--cyan), #7c4dff, var(--pink));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.1em;
+    animation: gradientMove 4s ease infinite;
+}
+
+.title-sub {
+    font-size: clamp(0.9rem, 3vw, 1.4rem);
+    letter-spacing: 0.6em;
+    color: var(--text-dim);
+    margin-right: -0.6em;
+}
+
+@keyframes gradientMove {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.controls-box {
+    background: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.1);
+}
+
+.key-badge {
+    padding: 2px 8px;
+    background: rgba(0, 229, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--cyan);
+}
+
+.btn-galaxy-start {
+    color: var(--bg);
+    background: linear-gradient(135deg, var(--cyan), #40c4ff);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+    transition: all 0.3s ease;
+    animation: btnPulse 2.5s ease-in-out infinite;
+}
+
+.btn-galaxy-start:hover {
+    color: var(--bg);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 229, 255, 0.5);
+}
+
+.btn-galaxy-start:active {
+    transform: scale(0.98);
+}
+
+@keyframes btnPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 4px 35px rgba(0, 229, 255, 0.6), 0 0 50px rgba(0, 229, 255, 0.2);
+    }
+}
