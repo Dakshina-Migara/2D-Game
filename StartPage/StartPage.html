@@ -11,47 +11,48 @@
 
 <body>
 
-    <div id="startScreen" class="start-screen vh-100 d-flex align-items-center justify-content-center overflow-hidden">
+    <div id="gameStartContainer"
+        class="game-start-container vh-100 d-flex align-items-center justify-content-center overflow-hidden">
 
         <div class="container z-1">
             <div class="row justify-content-center">
                 <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-                    <div class="start-content-card text-center p-4 p-md-5">
-                        <div class="game-title mb-3">
-                            <h1 class="title-main fw-black text-uppercase mb-0">Galaxy</h1>
-                            <h2 class="title-sub fw-semibold text-uppercase">Defender</h2>
+                    <div class="game-start-card text-center p-4 p-md-5">
+                        <div class="game-start-header mb-3">
+                            <h1 class="game-start-title fw-black text-uppercase mb-0">Galaxy</h1>
+                            <h2 class="game-start-subtitle fw-semibold text-uppercase">Defender</h2>
                         </div>
 
-                        <p class="tagline mb-4 opacity-75">Defend the galaxy from alien invaders</p>
+                        <p class="game-start-tagline mb-4 opacity-75">Defend the galaxy from alien invaders</p>
 
-                        <div class="controls-box p-3 mb-4 rounded-3">
+                        <div class="game-controls-container p-3 mb-4 rounded-3">
                             <div class="row g-2 align-items-center justify-content-center mb-2">
                                 <div class="col-auto">
-                                    <span class="key-badge">← →</span>
+                                    <span class="game-key-hint">← →</span>
                                 </div>
                                 <div class="col-auto">
-                                    <span class="text-dim small">or</span>
+                                    <span class="game-accent-text small">or</span>
                                 </div>
                                 <div class="col-auto">
-                                    <span class="key-badge">A D</span>
+                                    <span class="game-key-hint">A D</span>
                                 </div>
                                 <div class="col-auto">
-                                    <span class="text-dim small">Move</span>
+                                    <span class="game-accent-text small">Move</span>
                                 </div>
                             </div>
                             <div class="row g-2 align-items-center justify-content-center">
                                 <div class="col-auto">
-                                    <span class="key-badge px-3">SPACE</span>
+                                    <span class="game-key-hint px-3">SPACE</span>
                                 </div>
                                 <div class="col-auto">
-                                    <span class="text-dim small">Shoot</span>
+                                    <span class="game-accent-text small">Shoot</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="d-grid gap-2 col-8 col-md-6 mx-auto">
-                            <button id="startBtn"
-                                class="btn btn-galaxy-start btn-lg rounded-pill fw-bold text-uppercase py-3">
+                            <button id="startGameButton"
+                                class="btn game-btn-primary btn-lg rounded-pill fw-bold text-uppercase py-3">
                                 Start Game
                             </button>
                         </div>
