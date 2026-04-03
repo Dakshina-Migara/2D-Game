@@ -1,8 +1,4 @@
-/* ============================================================
-   GALAXY DEFENDER — Part 1: Start Screen (Bootstrap Integrated)
-   ============================================================ */
 
-/* ----- Design Tokens ----- */
 :root {
     --cyan: #00e5ff;
     --cyan-dim: #00a0b3;
@@ -16,7 +12,6 @@
     --font-heading: 'Segoe UI', Arial, sans-serif;
 }
 
-/* ----- Global Overrides ----- */
 body {
     background: var(--bg);
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -29,16 +24,11 @@ body {
     color: var(--text-dim) !important;
 }
 
-/* ============================================================
-   START SCREEN COMPONENTS
-   ============================================================ */
 
-/* Main Container - Z-index management */
 .start-screen {
     z-index: 10;
 }
 
-/* Glassmorphism Card Wrapper */
 .start-content-card {
     position: relative;
     background: var(--glass-bg);
@@ -62,7 +52,6 @@ body {
     }
 }
 
-/* Game Title Stylings */
 .title-main {
     font-size: clamp(2.5rem, 8vw, 4rem);
     background: linear-gradient(135deg, var(--cyan), #7c4dff, var(--pink));
@@ -79,7 +68,6 @@ body {
     letter-spacing: 0.6em;
     color: var(--text-dim);
     margin-right: -0.6em;
-    /* Offset for letter-spacing */
 }
 
 @keyframes gradientMove {
@@ -94,7 +82,6 @@ body {
     }
 }
 
-/* Controls Guide Box */
 .controls-box {
     background: rgba(0, 229, 255, 0.05);
     border: 1px solid rgba(0, 229, 255, 0.1);
@@ -110,7 +97,6 @@ body {
     color: var(--cyan);
 }
 
-/* Custom Galaxy Button */
 .btn-galaxy-start {
     color: var(--bg);
     background: linear-gradient(135deg, var(--cyan), #40c4ff);
