@@ -1,0 +1,301 @@
+/* ============================================================
+   GALAXY DEFENDER — Part 1: Start Screen (Responsive)
+   ============================================================ */
+
+/* ----- Design Tokens ----- */
+:root {
+    --cyan: #00e5ff;
+    --cyan-dim: #00a0b3;
+    --pink: #ff2d75;
+    --gold: #f5c542;
+    --bg: #050a18;
+    --text: #e0f7fa;
+    --text-dim: #80deea;
+    --glass-bg: rgba(0, 229, 255, 0.06);
+    --glass-border: rgba(0, 229, 255, 0.2);
+    --font-heading: 'Segoe UI', Arial, sans-serif;
+    --font-body: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ----- Reset ----- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    font-family: var(--font-body);
+    color: var(--text);
+    user-select: none;
+}
+
+/* ----- Utility ----- */
+.hidden {
+    display: none !important;
+}
+
+/* ============================================================
+   START SCREEN
+   ============================================================ */
+.start-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* Stars canvas behind everything */
+#bgCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Content card */
+.start-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: clamp(24px, 6vw, 60px) clamp(20px, 5vw, 50px);
+    max-width: 480px;
+    width: 90%;
+    background: rgba(8, 16, 40, 0.75);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ----- Title ----- */
+.game-title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 10px;
+}
+
+.title-main {
+    font-family: var(--font-heading);
+    font-size: clamp(36px, 10vw, 56px);
+    font-weight: 900;
+    letter-spacing: 6px;
+    background: linear-gradient(135deg, var(--cyan), #7c4dff, var(--pink));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientMove 4s ease infinite;
+}
+
+.title-sub {
+    font-family: var(--font-heading);
+    font-size: clamp(14px, 4vw, 22px);
+    font-weight: 600;
+    letter-spacing: 12px;
+    color: var(--text-dim);
+}
+
+@keyframes gradientMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* ----- Tagline ----- */
+.tagline {
+    font-size: clamp(13px, 2.5vw, 16px);
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+}
+
+/* ----- Controls Guide ----- */
+.controls-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding: 14px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: clamp(12px, 2vw, 14px);
+    color: var(--text-dim);
+}
+
+.key-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(0, 229, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    font-family: var(--font-heading);
+    font-size: clamp(10px, 1.5vw, 12px);
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 1px;
+}
+
+.control-label {
+    color: var(--text-dim);
+}
+
+/* ----- Start Button ----- */
+.start-btn {
+    display: inline-block;
+    padding: 14px 48px;
+    font-family: var(--font-heading);
+    font-size: clamp(13px, 2.5vw, 16px);
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--bg);
+    background: linear-gradient(135deg, var(--cyan), #40c4ff);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 20px rgba(0, 229, 255, 0.35);
+    animation: btnPulse 2.5s ease-in-out infinite;
+}
+
+.start-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 36px rgba(0, 229, 255, 0.55);
+}
+
+.start-btn:active {
+    transform: scale(0.96);
+}
+
+@keyframes btnPulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(0, 229, 255, 0.35);
+    }
+    50% {
+        box-shadow: 0 4px 40px rgba(0, 229, 255, 0.6),
+                    0 0 60px rgba(0, 229, 255, 0.15);
+    }
+}
+
+/* ============================================================
+   GAME AREA (placeholder for now)
+   ============================================================ */
+.game-area {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+}
+
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.placeholder-msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-size: clamp(14px, 3vw, 20px);
+    color: var(--text-dim);
+    letter-spacing: 2px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .start-content {
+        width: 92%;
+        padding: 24px 18px;
+    }
+
+    .controls-box {
+        padding: 10px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .title-main {
+        letter-spacing: 3px;
+    }
+
+    .title-sub {
+        letter-spacing: 6px;
+    }
+
+    .start-btn {
+        padding: 12px 36px;
+    }
+
+    .controls-box {
+        gap: 6px;
+        margin-bottom: 20px;
+    }
+}
+
+/* Landscape phones */
+@media (max-height: 450px) {
+    .start-content {
+        padding: 14px 16px;
+    }
+
+    .game-title {
+        margin-bottom: 4px;
+    }
+
+    .title-main {
+        font-size: 28px;
+    }
+
+    .title-sub {
+        font-size: 12px;
+    }
+
+    .tagline {
+        margin-bottom: 10px;
+        font-size: 11px;
+    }
+
+    .controls-box {
+        margin-bottom: 14px;
+        padding: 8px;
+    }
+
+    .start-btn {
+        padding: 10px 30px;
+    }
+}
