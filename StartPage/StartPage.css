@@ -1,31 +1,133 @@
+/* 
+  --------------------------------------------------
+  1. Base & Theme Variables
+  --------------------------------------------------
+*/
+:root {
+    --bg-dark: #050a18;
+    --text-primary: #e0f7fa;
+    --text-accent: #80deea;
+    --brand-primary: #00e5ff;
+    --brand-secondary: #7c4dff;
+    --brand-accent: #ff2d75;
+    --glass-background: rgba(8, 16, 40, 0.75);
+    --glass-border: rgba(0, 229, 255, 0.2);
+}
+
 body {
-    background: #050a18;
+    background: var(--bg-dark);
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    color: #e0f7fa;
+    color: var(--text-primary);
     user-select: none;
     overflow: hidden;
 }
 
-.text-dim {
-    color: #80deea !important;
+/* Helper Class for accent text */
+.game-accent-text {
+    color: var(--text-accent) !important;
 }
 
-.start-screen {
+/* 
+  --------------------------------------------------
+  2. Main Layer & Layout
+  --------------------------------------------------
+*/
+.game-start-container {
     z-index: 10;
+    position: relative;
+    width: 100%;
 }
 
-.start-content-card {
+/* 
+  --------------------------------------------------
+  3. Start Page Components
+  --------------------------------------------------
+*/
+
+/* Main wrapper card for start content */
+.game-start-card {
     position: relative;
-    background: rgba(8, 16, 40, 0.75);
-    border: 1px solid rgba(0, 229, 255, 0.2);
+    background: var(--glass-background);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: slideUpEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes fadeUp {
+/* Game Logo/Title section */
+.game-start-title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary), var(--brand-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.1em;
+}
+
+.game-start-subtitle {
+    font-size: clamp(0.9rem, 3vw, 1.4rem);
+    letter-spacing: 0.6em;
+    color: var(--text-accent);
+    margin-right: -0.6em;
+    /* Helps center with extra spacing on the right of the letters */
+}
+
+/* Content descriptions */
+.game-start-tagline {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+/* Controls reminder box */
+.game-controls-container {
+    background: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.1);
+}
+
+/* Keyboard key visual */
+.game-key-hint {
+    display: inline-block;
+    padding: 2px 10px;
+    background: rgba(0, 229, 255, 0.1);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    text-transform: uppercase;
+}
+
+/* 
+  --------------------------------------------------
+  4. Buttons & Interactions
+  --------------------------------------------------
+*/
+.game-btn-primary {
+    color: var(--bg-dark);
+    background: linear-gradient(135deg, var(--brand-primary), #40c4ff);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.game-btn-primary:hover {
+    color: var(--bg-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 229, 255, 0.5);
+}
+
+.game-btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* 
+  --------------------------------------------------
+  5. Animations
+  --------------------------------------------------
+*/
+@keyframes slideUpEntrance {
     from {
         opacity: 0;
         transform: translateY(40px);
@@ -35,54 +137,4 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.title-main {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    background: linear-gradient(135deg, #00e5ff, #7c4dff, #ff2d75);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.1em;
-}
-
-.title-sub {
-    font-size: clamp(0.9rem, 3vw, 1.4rem);
-    letter-spacing: 0.6em;
-    color: #80deea;
-    margin-right: -0.6em;
-}
-
-
-.controls-box {
-    background: rgba(0, 229, 255, 0.05);
-    border: 1px solid rgba(0, 229, 255, 0.1);
-}
-
-.key-badge {
-    padding: 2px 8px;
-    background: rgba(0, 229, 255, 0.1);
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #00e5ff;
-}
-
-.btn-galaxy-start {
-    color: #050a18;
-    background: linear-gradient(135deg, #00e5ff, #40c4ff);
-    border: none;
-    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
-    transition: all 0.3s ease;
-}
-
-.btn-galaxy-start:hover {
-    color: #050a18;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 229, 255, 0.5);
-}
-
-.btn-galaxy-start:active {
-    transform: scale(0.98);
 }
