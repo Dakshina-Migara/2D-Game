@@ -88,7 +88,6 @@ body {
     border: none;
     box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
     transition: all 0.3s ease;
-    animation: btnPulse 2.5s ease-in-out infinite;
 }
 
 .btn-galaxy-start:hover {
@@ -99,16 +98,4 @@ body {
 
 .btn-galaxy-start:active {
     transform: scale(0.98);
-}
-
-@keyframes btnPulse {
-
-    0%,
-    100% {
-        box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
-    }
-
-    50% {
-        box-shadow: 0 4px 35px rgba(0, 229, 255, 0.6), 0 0 50px rgba(0, 229, 255, 0.2);
-    }
 }
