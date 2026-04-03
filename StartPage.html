@@ -5,16 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2D-Game</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./StartPage.css">
 </head>
 
 <body>
 
     <!-- ===== START SCREEN ===== -->
-    <div id="startScreen" class="start-screen">
+    <!-- Bootstrap utilities: vh-100 (full viewport height), d-flex, align-items-center, justify-content-center -->
+    <div id="startScreen" class="start-screen vh-100 d-flex align-items-center justify-content-center overflow-hidden">
 
         <!-- Animated stars background (CSS only) -->
-        <div class="stars-container">
+        <div class="stars-container position-absolute top-0 start-0 w-100 h-100">
             <div class="star"></div>
             <div class="star"></div>
             <div class="star"></div>
@@ -37,39 +40,61 @@
             <div class="star"></div>
         </div>
 
-        <!-- Content -->
-        <div class="start-content">
-            <h1 class="game-title">
-                <span class="title-main">GALAXY</span>
-                <span class="title-sub">DEFENDER</span>
-            </h1>
+        <!-- Content (Bootstrap Card with custom glassmorphism) -->
+        <div class="container z-1">
+            <div class="row justify-content-center">
+                <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+                    <div class="start-content-card text-center p-4 p-md-5">
+                        <!-- Game Title -->
+                        <div class="game-title mb-3">
+                            <h1 class="title-main fw-black text-uppercase mb-0">Galaxy</h1>
+                            <h2 class="title-sub fw-semibold text-uppercase">Defender</h2>
+                        </div>
 
-            <p class="tagline">Defend the galaxy from alien invaders</p>
+                        <!-- Tagline -->
+                        <p class="tagline mb-4 opacity-75">Defend the galaxy from alien invaders</p>
 
-            <!-- Controls guide -->
-            <div class="controls-box">
-                <div class="control-row">
-                    <span class="key-badge">← →</span>
-                    <span class="control-label">or</span>
-                    <span class="key-badge">A D</span>
-                    <span class="control-label">Move</span>
-                </div>
-                <div class="control-row">
-                    <span class="key-badge">SPACE</span>
-                    <span class="control-label">Shoot</span>
+                        <!-- Controls Guide (Bootstrap-styled box) -->
+                        <div class="controls-box p-3 mb-4 rounded-3">
+                            <div class="row g-2 align-items-center justify-content-center mb-2">
+                                <div class="col-auto">
+                                    <span class="key-badge">← →</span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="text-dim small">or</span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="key-badge">A D</span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="text-dim small">Move</span>
+                                </div>
+                            </div>
+                            <div class="row g-2 align-items-center justify-content-center">
+                                <div class="col-auto">
+                                    <span class="key-badge px-3">SPACE</span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="text-dim small">Shoot</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Start Button (Bootstrap styled + Custom pulse) -->
+                        <div class="d-grid gap-2 col-8 col-md-6 mx-auto">
+                            <button id="startBtn"
+                                class="btn btn-galaxy-start btn-lg rounded-pill fw-bold text-uppercase py-3">
+                                Start Game
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Start button -->
-            <button id="startBtn" class="start-btn">START GAME</button>
         </div>
     </div>
 
-    <!-- ===== GAME AREA (hidden until start) ===== -->
-    <div id="gameArea" class="game-area hidden">
-        <canvas id="gameCanvas"></canvas>
-        <p class="placeholder-msg">🎮 Game will load here...</p>
-    </div>
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
