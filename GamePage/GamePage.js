@@ -110,8 +110,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (ballRemoved) continue;
 
-            // Check if ball passed the player (GAME OVER)
-            if (ball.y >= playerY - 20) {
+            // Check if ball hits the shooter OR passes the player (GAME OVER)
+            const playerHit = (
+                ball.x + 40 > playerX - 36 &&
+                ball.x < playerX + 36 &&
+                ball.y + 40 > playerY - 36 &&
+                ball.y < playerY + 36
+            );
+
+            if (playerHit || ball.y >= playerY + 50) {
                 endGame();
                 break;
             }
