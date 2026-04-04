@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const BULLET_SPEED = 14; 
     const BALL_SPEED = 3;
     const SPAWN_INTERVAL = 3000; 
+    const PLAYER_SPEED = 8;
+    const keys = {};
 
     // Player local position tracking
     let playerX = window.innerWidth / 2;
@@ -36,14 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
         createBullet();
     });
 
-    // 3. Control Handling (ESC: Pause, SPACE: Shoot)
+    // 3. Control Handling (ESC: Pause, SPACE: Shoot, A/D/Arrows: Move)
     document.addEventListener('keydown', (e) => {
+        keys[e.key] = true;
         if (e.key === 'Escape' && !isGameOver) {
             togglePause();
         }
         if (e.key === ' ' && !isGameOver && !isPaused) {
             createBullet();
         }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        keys[e.key] = false;
     });
 
     function togglePause() {
@@ -97,6 +104,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isGameOver) requestAnimationFrame(gameLoop);
             return;
         }
+
+        // 0. Move Player (Keyboard)
+        let moved = false;
+        if (keys['a'] || keys['A'] || keys['ArrowLeft']) {
+            playerX -= PLAYER_SPEED;
+            moved = true;
+        }
+        if (keys['d'] || keys['D'] || keys['ArrowRight']) {
+            playerX += PLAYER_SPEED;
+            moved = true;
+        }
+
+        if (moved) {
+            // Keep on screen
+            playerX = Math.max(40, Math.min(window.innerWidth - 40, playerX));
+            player.style.left = `${playerX}px`;
+        }
+
         // 1. Move bullets
         for (let i = bullets.length - 1; i >= 0; i--) {
             const b = bullets[i];
