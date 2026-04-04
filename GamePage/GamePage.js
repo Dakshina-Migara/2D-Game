@@ -25,18 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let playerX = window.innerWidth / 2;
     const playerY = window.innerHeight - 60;
 
-    // 1. Movement: Smooth follow
-    document.addEventListener('mousemove', (e) => {
-        if (isGameOver || isPaused) return;
-        playerX = e.clientX;
-        player.style.left = `${playerX}px`;
-    });
-
-    // 2. Shooting
-    document.addEventListener('mousedown', () => {
-        if (isGameOver || isPaused) return;
-        createBullet();
-    });
 
     // 3. Control Handling (ESC: Pause, SPACE: Shoot, A/D/Arrows: Move)
     document.addEventListener('keydown', (e) => {
