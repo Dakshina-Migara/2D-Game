@@ -36,10 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
         createBullet();
     });
 
-    // 3. Pause Handling (ESC Key)
+    // 3. Control Handling (ESC: Pause, SPACE: Shoot)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !isGameOver) {
             togglePause();
+        }
+        if (e.key === ' ' && !isGameOver && !isPaused) {
+            createBullet();
         }
     });
 
