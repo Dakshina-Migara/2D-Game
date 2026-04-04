@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const BULLET_SPEED = 14; 
     const BALL_SPEED = 3;
-    const SPAWN_INTERVAL = 1500; 
+    const SPAWN_INTERVAL = 3000; 
 
     // Player local position tracking
     let playerX = window.innerWidth / 2;
@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createBall() {
+        if (isGameOver || balls.length > 0) return;
         const ballEl = document.createElement('div');
         ballEl.className = 'target-orb';
         
