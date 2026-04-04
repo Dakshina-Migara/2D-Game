@@ -1,0 +1,150 @@
+:root {
+    --bg-dark: #070d1a;
+    --score-card-bg: rgba(22, 33, 62, 0.7);
+    --score-accent: #00d2ff;
+    --player-cyan: #00f2ff;
+    --target-yellow: #ffb100;
+    --shadow-glow: 0 0 15px rgba(0, 242, 255, 0.4);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--bg-dark);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    overflow: hidden;
+}
+
+#game-surface {
+    background-image: radial-gradient(circle at center, #0c1426 0%, #070d1a 100%);
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    cursor: crosshair;
+}
+
+/* Score Component */
+.score-card {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    background: var(--score-card-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    min-width: 140px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.score-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--score-accent);
+    letter-spacing: 2px;
+}
+
+.score-number {
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1;
+}
+
+/* Target Orb Component */
+.target-orb {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: var(--target-yellow);
+    border-radius: 50%;
+    top: 20%;
+    right: 20%;
+    box-shadow: 0 0 30px rgba(255, 177, 0, 0.6);
+}
+
+/* Player Component */
+.player-character {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: left 0.1s ease-out; /* Smooth follow delay */
+}
+
+.player-icon {
+    width: 72px;
+    height: 72px;
+    background-color: var(--player-cyan);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 35px rgba(0, 242, 255, 0.7);
+    position: relative;
+    border: 2px solid #fff;
+}
+
+/* Concentric target circles in player icon */
+.inner-circle {
+    width: 42px;
+    height: 42px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inner-circle::after {
+    content: '';
+    width: 24px;
+    height: 24px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+
+.inner-circle::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.player-pointer {
+    width: 4px;
+    height: 50px;
+    background: linear-gradient(to top, var(--player-cyan), transparent);
+    position: absolute;
+    bottom: 72px; 
+}
+
+/* Animations */
+@keyframes pulse-score {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); color: var(--player-cyan); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse-score 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Bullet Style */
+.bullet {
+    position: absolute;
+    width: 6px;
+    height: 18px;
+    background-color: var(--player-cyan);
+    border-radius: 3px;
+    box-shadow: 0 0 10px var(--player-cyan);
+    z-index: 5;
+    pointer-events: none;
+}
