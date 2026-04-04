@@ -29,6 +29,15 @@
             <div class="player-pointer"></div>
         </div>
 
+        <!-- Game Over Overlay -->
+        <div id="game-over" class="game-over-overlay d-none">
+            <div class="game-over-box p-5 text-center shadow-lg">
+                <h2 class="display-3 fw-bold mb-3">GAME OVER</h2>
+                <p class="lead mb-4">Final Score: <span id="final-score" class="fw-bold">0</span></p>
+                <button class="btn btn-primary btn-lg px-5 outline-light" onclick="location.reload()">Restart</button>
+            </div>
+        </div>
+
     </main>
 
     <!-- Game Logic & Interaction -->

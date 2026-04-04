@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentScore = 0;
     let bullets = [];
     let balls = [];
+    let isGameOver = false;
+    let spawnTimer;
     
     const BULLET_SPEED = 14; 
     const BALL_SPEED = 3;
@@ -22,12 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Movement: Smooth follow
     document.addEventListener('mousemove', (e) => {
+        if (isGameOver) return;
         playerX = e.clientX;
         player.style.left = `${playerX}px`;
     });
 
     // 2. Shooting
     document.addEventListener('mousedown', () => {
+        if (isGameOver) return;
         createBullet();
     });
 
@@ -60,9 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Spawn balls at interval
-    setInterval(createBall, SPAWN_INTERVAL);
+    spawnTimer = setInterval(createBall, SPAWN_INTERVAL);
 
     function gameLoop() {
+        if (isGameOver) return;
         // 1. Move bullets
         for (let i = bullets.length - 1; i >= 0; i--) {
             const b = bullets[i];
@@ -104,6 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (ballRemoved) continue;
 
+            // Check if ball passed the player (GAME OVER)
+            if (ball.y >= playerY - 20) {
+                endGame();
+                break;
+            }
+
             if (ball.y > window.innerHeight + 50) {
                 gameSurface.removeChild(ball.element);
                 balls.splice(i, 1);
@@ -123,6 +134,17 @@ document.addEventListener('DOMContentLoaded', () => {
         parent.classList.add('pulse');
     }
 
+    function endGame() {
+        isGameOver = true;
+        clearInterval(spawnTimer);
+        
+        const gameOverScreen = document.getElementById('game-over');
+        const finalScoreEl = document.getElementById('final-score');
+        
+        finalScoreEl.textContent = currentScore;
+        gameOverScreen.classList.remove('d-none');
+    }
+
     requestAnimationFrame(gameLoop);
-    console.log('Stellar Dash - Falling balls logic active!');
+    console.log('Stellar Dash - Game logic active with Game Over condition!');
 });
