@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let bullets = [];
     let balls = [];
     let isGameOver = false;
+    let isPaused = false;
     let spawnTimer;
     
     const BULLET_SPEED = 14; 
@@ -24,16 +25,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Movement: Smooth follow
     document.addEventListener('mousemove', (e) => {
-        if (isGameOver) return;
+        if (isGameOver || isPaused) return;
         playerX = e.clientX;
         player.style.left = `${playerX}px`;
     });
 
     // 2. Shooting
     document.addEventListener('mousedown', () => {
-        if (isGameOver) return;
+        if (isGameOver || isPaused) return;
         createBullet();
     });
+
+    // 3. Pause Handling (ESC Key)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !isGameOver) {
+            togglePause();
+        }
+    });
+
+    function togglePause() {
+        isPaused = !isPaused;
+        const pauseScreen = document.getElementById('pause-screen');
+        if (isPaused) {
+            pauseScreen.classList.remove('d-none');
+            clearInterval(spawnTimer);
+        } else {
+            pauseScreen.classList.add('d-none');
+            spawnTimer = setInterval(createBall, SPAWN_INTERVAL);
+        }
+    }
+    // Expose for HTML button
+    window.togglePause = togglePause;
 
     function createBullet() {
         const bulletEl = document.createElement('div');
@@ -50,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createBall() {
-        if (isGameOver || balls.length > 0) return;
+        if (isGameOver || isPaused || balls.length > 0) return;
         const ballEl = document.createElement('div');
         ballEl.className = 'target-orb';
         
@@ -68,7 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
     spawnTimer = setInterval(createBall, SPAWN_INTERVAL);
 
     function gameLoop() {
-        if (isGameOver) return;
+        if (isGameOver || isPaused) {
+            if (!isGameOver) requestAnimationFrame(gameLoop);
+            return;
+        }
         // 1. Move bullets
         for (let i = bullets.length - 1; i >= 0; i--) {
             const b = bullets[i];
