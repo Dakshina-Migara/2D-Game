@@ -1,4 +1,4 @@
-# Dash 🚀
+# Shooter 🚀
 A modern, responsive 2D arcade shooter designed with premium aesthetics and smooth gameplay logic.
 
 ## 🎮 How to Play

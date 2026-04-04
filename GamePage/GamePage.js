@@ -200,5 +200,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     requestAnimationFrame(gameLoop);
-    console.log('Stellar Dash - Game logic active with Game Over condition!');
+    console.log('Shooter - Game logic active with Game Over condition!');
 });
