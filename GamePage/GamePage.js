@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let spawnTimer;
     
     const BULLET_SPEED = 14; 
-    const BALL_SPEED = 3;
+    let currentBallSpeed = 3;
     const SPAWN_INTERVAL = 3000; 
     const PLAYER_SPEED = 8;
     const keys = {};
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Move balls and Check Collisions
         for (let i = balls.length - 1; i >= 0; i--) {
             const ball = balls[i];
-            ball.y += BALL_SPEED;
+            ball.y += currentBallSpeed;
             ball.element.style.top = `${ball.y}px`;
 
             let ballRemoved = false;
@@ -177,6 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
         currentScore += points;
         scoreVal.textContent = currentScore;
         
+        // Difficulty increase: Speed up every 20 points
+        if (currentScore > 0 && currentScore % 20 === 0) {
+            currentBallSpeed += 1; // Increase speed by 1 unit
+        }
+
         const parent = scoreVal.parentElement;
         parent.classList.remove('pulse');
         void parent.offsetWidth; 
