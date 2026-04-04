@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     gameSurface.removeChild(bullet.element);
                     bullets.splice(j, 1);
 
-                    updateScore(100);
+                    updateScore(1);
                     ballRemoved = true;
                     break; 
                 }
