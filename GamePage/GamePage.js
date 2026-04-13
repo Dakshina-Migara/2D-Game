@@ -191,8 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
         currentScore += points;
         scoreVal.textContent = currentScore;
         
-        // Difficulty increase: Speed up every 20 points
-        if (currentScore > 0 && currentScore % 20 === 0) {
+        // Difficulty increase: Speed up every 15 points
+        if (currentScore > 0 && currentScore % 15 === 0) {
             currentBallSpeed += 1; // Increase speed by 1 unit
         }
 
