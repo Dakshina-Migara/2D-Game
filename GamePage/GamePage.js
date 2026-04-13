@@ -1,5 +1,5 @@
 /**
- * Stellar Dash: Full Page Game Controller
+ * Shooter: Full Page Game Controller
  * Features: Player movement and bullet shooting.
  */
 
