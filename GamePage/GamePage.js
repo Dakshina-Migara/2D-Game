@@ -7,7 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameSurface = document.getElementById('game-surface');
     const player = document.getElementById('player');
     const scoreVal = document.getElementById('score-value');
+    const playerDisplayName = document.getElementById('player-display-name');
     
+    // Get Player Name from session storage
+    const currentName = sessionStorage.getItem('currentPlayerName') || 'Elite Pilot';
+    if (playerDisplayName) playerDisplayName.textContent = currentName;
+
     let currentScore = 0;
     let bullets = [];
     let balls = [];
@@ -207,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveHighScore(score) {
         const highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
         const newScore = {
+            name: currentName,
             score: score,
             date: new Date().toLocaleDateString()
         };
@@ -234,9 +240,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('div');
             item.className = 'leaderboard-item list-group-item';
             item.innerHTML = `
-                <div>
-                    <span class="leaderboard-rank">#${index + 1}</span>
-                    <span class="leaderboard-date">${entry.date}</span>
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-center">
+                        <span class="leaderboard-rank me-2">#${index + 1}</span>
+                        <span class="text-white fw-bold" style="font-size: 0.9rem;">${entry.name || 'Anonymous'}</span>
+                    </div>
+                    <span class="leaderboard-date ms-4">${entry.date}</span>
                 </div>
                 <span class="leaderboard-score">${entry.score} pts</span>
             `;
