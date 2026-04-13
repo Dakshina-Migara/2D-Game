@@ -55,6 +55,15 @@
                                 Start Mission
                             </button>
                         </div>
+
+                        <!-- High Score Preview -->
+                        <div id="highScorePreview" class="mt-4 p-3 rounded-4" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);">
+                            <h6 class="text-uppercase small fw-bold mb-2" style="color: var(--brand-primary); letter-spacing: 2px;">Hall of Fame</h6>
+                            <div id="topScoreList" class="small">
+                                <!-- Top scores will be loaded here -->
+                                <span class="text-muted">Loading scores...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,6 +81,27 @@
                 window.location.href = '../GamePage/GamePage.html';
             }, 600);
         });
+
+        // Load High Scores for Hall of Fame
+        function loadHighScores() {
+            const scoreList = document.getElementById('topScoreList');
+            const highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
+            
+            if (highScores.length === 0) {
+                scoreList.innerHTML = '<span class="text-muted fst-italic">No records yet. Be the first!</span>';
+                return;
+            }
+
+            // Show top 3
+            scoreList.innerHTML = highScores.slice(0, 3).map((s, i) => `
+                <div class="d-flex justify-content-between mb-1">
+                    <span><span class="text-info">#${i+1}</span> ${s.date}</span>
+                    <span class="fw-bold text-white">${s.score} pts</span>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadHighScores);
     </script>
 </body>
 

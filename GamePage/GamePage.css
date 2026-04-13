@@ -215,3 +215,41 @@ body, html {
     letter-spacing: 5px;
     text-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
 }
+
+/* Leaderboard Styling */
+.leaderboard-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-item {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px !important;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.leaderboard-item:last-child {
+    border-bottom: none !important;
+}
+
+.leaderboard-rank {
+    color: var(--score-accent);
+    margin-right: 15px;
+}
+
+.leaderboard-score {
+    color: var(--player-cyan);
+}
+
+.leaderboard-date {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: normal;
+}

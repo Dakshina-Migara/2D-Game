@@ -204,6 +204,46 @@ document.addEventListener('DOMContentLoaded', () => {
         parent.classList.add('pulse');
     }
 
+    function saveHighScore(score) {
+        const highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
+        const newScore = {
+            score: score,
+            date: new Date().toLocaleDateString()
+        };
+        
+        highScores.push(newScore);
+        highScores.sort((a, b) => b.score - a.score);
+        
+        // Keep only top 5
+        const topScores = highScores.slice(0, 5);
+        localStorage.setItem('shooter_high_scores', JSON.stringify(topScores));
+    }
+
+    function displayLeaderboard() {
+        const leaderboardList = document.getElementById('leaderboard-list');
+        const highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
+        
+        leaderboardList.innerHTML = '';
+        
+        if (highScores.length === 0) {
+            leaderboardList.innerHTML = '<div class="text-center text-muted py-2">No high scores yet!</div>';
+            return;
+        }
+
+        highScores.forEach((entry, index) => {
+            const item = document.createElement('div');
+            item.className = 'leaderboard-item list-group-item';
+            item.innerHTML = `
+                <div>
+                    <span class="leaderboard-rank">#${index + 1}</span>
+                    <span class="leaderboard-date">${entry.date}</span>
+                </div>
+                <span class="leaderboard-score">${entry.score} pts</span>
+            `;
+            leaderboardList.appendChild(item);
+        });
+    }
+
     function endGame() {
         isGameOver = true;
         clearInterval(spawnTimer);
@@ -212,6 +252,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const finalScoreEl = document.getElementById('final-score');
         
         finalScoreEl.textContent = currentScore;
+        
+        // Save and Show Leaderboard
+        saveHighScore(currentScore);
+        displayLeaderboard();
+        
         gameOverScreen.classList.remove('d-none');
     }
 
