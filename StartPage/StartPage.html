@@ -28,41 +28,43 @@
                         <p class="game-start-tagline text-muted mb-4 px-3">Defend the galaxy from relentless alien
                             invaders</p>
 
-                        <div class="game-controls-container p-3 mb-4 rounded-4">
+                        <div class="game-controls-container p-3 p-md-4 mb-4 rounded-4 position-relative">
+                            <div class="control-header mb-3">
+                                <span class="text-uppercase tiny-label">Control Guide</span>
+                            </div>
+                            
                             <!-- Desktop Controls -->
                             <div class="desktop-controls">
-                                <div class="row g-2 align-items-center justify-content-center mb-3">
-                                    <div class="col-auto">
-                                        <span class="game-key-hint">← →</span>
+                                <div class="row g-3 align-items-center justify-content-center">
+                                    <div class="col-auto text-end">
+                                        <div class="kbm-hint mb-2">
+                                            <span class="game-key-hint">←</span>
+                                            <span class="game-key-hint">→</span>
+                                            <span class="ms-1 tiny-label">Move</span>
+                                        </div>
+                                        <div class="kbm-hint">
+                                            <span class="game-key-hint px-3">SPACE</span>
+                                            <span class="ms-1 tiny-label">Shoot</span>
+                                        </div>
                                     </div>
-                                    <div class="col-auto">
-                                        <span class="game-accent-text small fw-light px-1">or</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span class="game-key-hint">A D</span>
-                                    </div>
-                                    <div class="col-auto ms-2">
-                                        <span class="game-accent-text small text-uppercase fw-bold">Move</span>
-                                    </div>
-                                </div>
-                                <div class="row g-2 align-items-center justify-content-center">
-                                    <div class="col-auto">
-                                        <span class="game-key-hint px-3">SPACE</span>
-                                    </div>
-                                    <div class="col-auto ms-2">
-                                        <span class="game-accent-text small text-uppercase fw-bold">Shoot</span>
+                                    <div class="col-auto d-none d-md-block border-start border-secondary opacity-25" style="height: 40px;"></div>
+                                    <div class="col text-start d-none d-md-block">
+                                        <p class="mb-0 small text-muted">Use <span class="text-white">A / D</span> or <span class="text-white">Arrows</span> to navigate and <span class="text-white">SPACE</span> to fire.</p>
                                     </div>
                                 </div>
                             </div>
+
                             <!-- Mobile Controls Hint -->
-                            <div class="mobile-controls d-none mt-1">
-                                <div class="row g-2 align-items-center justify-content-center">
-                                    <div class="col-auto">
-                                        <span class="game-key-hint px-3">DRAG</span>
+                            <div class="mobile-controls d-none">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="drag-badge mb-3">
+                                        <div class="drag-icon-anim"></div>
+                                        <span>DRAG TO MOVE</span>
                                     </div>
-                                    <div class="col-auto ms-2">
-                                        <span class="game-accent-text small text-uppercase fw-bold">Move & Shoot</span>
+                                    <div class="desc-line">
+                                        <span class="game-accent-text small text-uppercase">Auto-Firing Enabled</span>
                                     </div>
+                                    <p class="mt-2 mb-0 x-small text-muted px-2">Slide your finger left or right to control the ship.</p>
                                 </div>
                             </div>
                         </div>
