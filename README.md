@@ -6,26 +6,34 @@ Shooter is a high-octane 2D space shooter built with pure HTML, CSS, and JavaScr
 
 ## 🚀 Features
 
-- **Smooth Mechanics:** Responsive player movement and bullet physics.
-- **Dynamic Difficulty:** The game gets progressively harder every 15 points, increasing ball speed, player speed, and bullet velocity.
-- **Vibrant Visuals:** Glowing, multi-colored target orbs and a sleek dark-themed interface.
-- **Interactive Game Loop:** Includes scoring, pause functionality, and a dedicated Game Over screen.
-- **Responsive Management:** Optimized for full-page gameplay.
+- **Smooth Mechanics:** Responsive player movement and bullet physics designed for both desktop and mobile.
+- **Dynamic Difficulty:** The challenge intensifies every 15 points, scaling enemy speed and player capabilities.
+- **Vibrant Visuals:** Glassmorphic UI with glowing effects, multi-colored enemies, and smooth CSS animations.
+- **Leaderboard System:** Persistent high scores saved locally so you can track your progress and compete with yourself.
+- **Seamless UX:** Instant game restart without re-entering your pilot name, and forced navigation to the home page on refresh for a consistent experience.
+- **Fully Responsive:** Optimized layout that adapts perfectly from desktop monitors to mobile screens.
 
 ## 🕹️ Controls
 
+### 💻 Desktop
 | Action | Control |
 | :--- | :--- |
-| **Move Left** | `A` or `←` |
-| **Move Right** | `D` or `→` |
+| **Move** | `A` & `D` or `←` & `→` |
 | **Shoot** | `Spacebar` |
 | **Pause/Resume** | `Escape` |
 
+### 📱 Mobile
+| Action | Control |
+| :--- | :--- |
+| **Move** | `Touch & Drag` left/right |
+| **Shoot** | `Auto-firing` (active during drag) |
+
 ## 🛠️ Built With
 
-- **HTML5:** Semantic structure and game surface canvas.
-- **CSS3:** Modern styling with animations, glassmorphism, and responsive design.
-- **JavaScript (ES6):** Custom game engine logic for collision detection, spawning, and state management.
+- **HTML5:** Semantic structure and game surface.
+- **CSS3:** Custom design system featuring animations, glassmorphism, and advanced responsive layouts (no heavy frameworks).
+- **JavaScript (ES6):** Custom game engine logic for collision detection, dynamic spawning, and state management.
+- **Bootstrap 5:** Used for structural grid and modern UI components.
 
 ## 🏁 Getting Started
 
@@ -35,8 +43,8 @@ Shooter is a high-octane 2D space shooter built with pure HTML, CSS, and JavaScr
    ```
 2. **Open the project:**
    Navigate to the project folder and open `StartPage/StartPage.html` in your favorite web browser.
-3. **Play:**
-   Click the start button and defend your sector!
+3. **Identify Yourself:**
+   Enter your pilot name and click **Start Mission** to begin.
 
 ---
 
