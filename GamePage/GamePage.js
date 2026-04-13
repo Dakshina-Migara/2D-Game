@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPaused = false;
     let spawnTimer;
     
-    const BULLET_SPEED = 14; 
+    let currentBulletSpeed = 14; 
     let currentBallSpeed = 3;
     const SPAWN_INTERVAL = 3000; 
-    const PLAYER_SPEED = 8;
+    let currentPlayerSpeed = 8;
     const keys = {};
 
     // Player local position tracking
@@ -110,11 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 0. Move Player (Keyboard)
         let moved = false;
         if (keys['a'] || keys['A'] || keys['ArrowLeft']) {
-            playerX -= PLAYER_SPEED;
+            playerX -= currentPlayerSpeed;
             moved = true;
         }
         if (keys['d'] || keys['D'] || keys['ArrowRight']) {
-            playerX += PLAYER_SPEED;
+            playerX += currentPlayerSpeed;
             moved = true;
         }
 
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Move bullets
         for (let i = bullets.length - 1; i >= 0; i--) {
             const b = bullets[i];
-            b.y -= BULLET_SPEED;
+            b.y -= currentBulletSpeed;
             b.element.style.top = `${b.y}px`;
             
             if (b.y < -50) {
@@ -191,9 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
         currentScore += points;
         scoreVal.textContent = currentScore;
         
-        // Difficulty increase: Speed up every 15 points
+        // Difficulty increase: Speed up everything every 15 points
         if (currentScore > 0 && currentScore % 15 === 0) {
-            currentBallSpeed += 1; // Increase speed by 1 unit
+            currentBallSpeed += 1;   // Increase ball drop speed
+            currentPlayerSpeed += 1; // Increase shooter movement speed
+            currentBulletSpeed += 2; // Increase bullet flight speed
         }
 
         const parent = scoreVal.parentElement;
