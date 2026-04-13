@@ -10,6 +10,13 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="GamePage.css">
     <link rel="icon" type="image/png" href="../assests/icons8-gun-100.png">
+    <script>
+        // Check for page reload - redirect to Start Page immediately if refreshed
+        if (String(window.performance.getEntriesByType("navigation")[0]?.type) === "reload" || 
+            (window.performance && window.performance.navigation && window.performance.navigation.type === 1)) {
+            window.location.href = '../StartPage/StartPage.html';
+        }
+    </script>
 </head>
 
 <body class="bg-dark overflow-hidden">

@@ -344,6 +344,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function endGame() {
         isGameOver = true;
+        
+        // Stop current animation loops
+        bullets.forEach(b => gameSurface.removeChild(b.element));
+        balls.forEach(b => gameSurface.removeChild(b.element));
+        bullets = [];
+        balls = [];
+        
         clearInterval(spawnTimer);
         
         const gameOverScreen = document.getElementById('game-over');
@@ -357,6 +364,37 @@ document.addEventListener('DOMContentLoaded', () => {
         
         gameOverScreen.classList.remove('d-none');
     }
+    function restartGame() {
+        // Reset variables
+        currentScore = 0;
+        scoreVal.textContent = '0';
+        isGameOver = false;
+        isPaused = false;
+        bullets = [];
+        balls = [];
+        
+        // Clean game surface
+        const allBullets = document.querySelectorAll('.bullet');
+        const allBalls = document.querySelectorAll('.target-orb');
+        allBullets.forEach(el => el.remove());
+        allBalls.forEach(el => el.remove());
+        
+        // Hide overlays
+        document.getElementById('game-over').classList.add('d-none');
+        document.getElementById('pause-screen').classList.add('d-none');
+        
+        // Reset player
+        playerX = window.innerWidth / 2;
+        updateViewDimensions();
+        
+        // Restart timers
+        clearInterval(spawnTimer);
+        spawnTimer = setInterval(createBall, SPAWN_INTERVAL);
+        
+        // Resume loop
+        requestAnimationFrame(gameLoop);
+    }
+    window.restartGame = restartGame;
 
     requestAnimationFrame(gameLoop);
     console.log('Shooter - Game logic active with Game Over condition!');
