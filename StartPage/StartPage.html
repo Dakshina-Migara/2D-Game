@@ -49,11 +49,26 @@
                             </div>
                         </div>
 
+                        <!-- Name Input Section -->
+                        <div class="mb-4">
+                            <label for="playerName" class="form-label text-uppercase small fw-bold mb-2" style="color: var(--brand-accent);">Identify Yourself, Pilot</label>
+                            <input type="text" id="playerName" class="form-control bg-dark border-secondary text-white text-center rounded-pill py-2" placeholder="Enter Name" maxlength="15" autocomplete="off">
+                        </div>
+
                         <div class="d-grid gap-2 col-10 col-md-8 mx-auto mt-2">
                             <button id="startGameButton"
                                 class="btn game-btn-primary btn-lg rounded-pill fw-black text-uppercase py-3">
                                 Start Mission
                             </button>
+                        </div>
+
+                        <!-- High Score Preview -->
+                        <div id="highScorePreview" class="mt-4 p-3 rounded-4" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);">
+                            <h6 class="text-uppercase small fw-bold mb-2" style="color: var(--brand-primary); letter-spacing: 2px;">Hall of Fame</h6>
+                            <div id="topScoreList" class="small">
+                                <!-- Top scores will be loaded here -->
+                                <span class="text-muted">Loading scores...</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,6 +79,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('startGameButton').addEventListener('click', function() {
+            const nameField = document.getElementById('playerName');
+            const nameInput = nameField.value.trim();
+            
+            // Validation: Prevent entry if name is empty
+            if (!nameInput) {
+                nameField.classList.add('is-invalid');
+                nameField.placeholder = "Pilot Name Required!";
+                nameField.style.borderColor = "var(--brand-accent)";
+                nameField.focus();
+                
+                // Shake effect for feedback
+                nameField.parentElement.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 300 });
+                
+                return;
+            }
+
+            // Store name for the game session
+            sessionStorage.setItem('currentPlayerName', nameInput);
+
             // Add a slight delay for a potential transition effect or just navigate directly
             this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Initializing...';
             this.disabled = true;
@@ -72,6 +111,33 @@
                 window.location.href = '../GamePage/GamePage.html';
             }, 600);
         });
+
+        // Clear validation style on input
+        document.getElementById('playerName').addEventListener('input', function() {
+            this.classList.remove('is-invalid');
+            this.style.borderColor = "rgba(255,255,255,0.1)";
+        });
+
+        // Load High Scores for Hall of Fame
+        function loadHighScores() {
+            const scoreList = document.getElementById('topScoreList');
+            const highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
+            
+            if (highScores.length === 0) {
+                scoreList.innerHTML = '<span class="text-muted fst-italic">No records yet. Be the first!</span>';
+                return;
+            }
+
+            // Show top 3
+            scoreList.innerHTML = highScores.slice(0, 3).map((s, i) => `
+                <div class="d-flex justify-content-between mb-1">
+                    <span><span class="text-info">#${i+1}</span> ${s.name || 'Anonymous'}</span>
+                    <span class="fw-bold text-white">${s.score} pts</span>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadHighScores);
     </script>
 </body>
 

@@ -7,7 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameSurface = document.getElementById('game-surface');
     const player = document.getElementById('player');
     const scoreVal = document.getElementById('score-value');
+    const playerDisplayName = document.getElementById('player-display-name');
     
+    // Get Player Name from session storage
+    const currentName = sessionStorage.getItem('currentPlayerName') || 'Elite Pilot';
+    if (playerDisplayName) playerDisplayName.textContent = currentName;
+
     let currentScore = 0;
     let bullets = [];
     let balls = [];
@@ -204,6 +209,63 @@ document.addEventListener('DOMContentLoaded', () => {
         parent.classList.add('pulse');
     }
 
+    function saveHighScore(score) {
+        let highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
+        
+        // Find if user already has a score
+        const existingIndex = highScores.findIndex(entry => entry.name.toLowerCase() === currentName.toLowerCase());
+        
+        if (existingIndex !== -1) {
+            // Update only if the new score is higher
+            if (score > highScores[existingIndex].score) {
+                highScores[existingIndex].score = score;
+                highScores[existingIndex].date = new Date().toLocaleDateString();
+            }
+        } else {
+            // Add new user
+            highScores.push({
+                name: currentName,
+                score: score,
+                date: new Date().toLocaleDateString()
+            });
+        }
+        
+        // Sort by score descending
+        highScores.sort((a, b) => b.score - a.score);
+        
+        // Keep top 5
+        const topScores = highScores.slice(0, 5);
+        localStorage.setItem('shooter_high_scores', JSON.stringify(topScores));
+    }
+
+    function displayLeaderboard() {
+        const leaderboardList = document.getElementById('leaderboard-list');
+        const highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
+        
+        leaderboardList.innerHTML = '';
+        
+        if (highScores.length === 0) {
+            leaderboardList.innerHTML = '<div class="text-center text-muted py-2">No high scores yet!</div>';
+            return;
+        }
+
+        highScores.forEach((entry, index) => {
+            const item = document.createElement('div');
+            item.className = 'leaderboard-item list-group-item';
+            item.innerHTML = `
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-center">
+                        <span class="leaderboard-rank me-2">#${index + 1}</span>
+                        <span class="text-white fw-bold" style="font-size: 0.9rem;">${entry.name || 'Anonymous'}</span>
+                    </div>
+                    <span class="leaderboard-date ms-4">${entry.date}</span>
+                </div>
+                <span class="leaderboard-score">${entry.score} pts</span>
+            `;
+            leaderboardList.appendChild(item);
+        });
+    }
+
     function endGame() {
         isGameOver = true;
         clearInterval(spawnTimer);
@@ -212,6 +274,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const finalScoreEl = document.getElementById('final-score');
         
         finalScoreEl.textContent = currentScore;
+        
+        // Save and Show Leaderboard
+        saveHighScore(currentScore);
+        displayLeaderboard();
+        
         gameOverScreen.classList.remove('d-none');
     }
 
