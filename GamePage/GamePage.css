@@ -36,6 +36,25 @@ body, html {
     min-width: 140px;
     z-index: 10;
     pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 576px) {
+    .score-card {
+        top: 20px;
+        right: 20px;
+        padding: 5px 15px !important;
+        min-width: 100px;
+    }
+    .score-number {
+        font-size: 1.8rem !important;
+    }
+    .score-label {
+        font-size: 0.65rem !important;
+    }
+    #player-display-name {
+        font-size: 0.7rem !important;
+    }
 }
 
 .score-label {
@@ -123,6 +142,29 @@ body, html {
     bottom: 72px; 
 }
 
+@media (max-width: 576px) {
+    .player-icon {
+        width: 52px;
+        height: 52px;
+    }
+    .inner-circle {
+        width: 30px;
+        height: 30px;
+    }
+    .inner-circle::after {
+        width: 16px;
+        height: 16px;
+    }
+    .player-pointer {
+        height: 35px;
+        bottom: 52px;
+    }
+    .target-orb {
+        width: 30px;
+        height: 30px;
+    }
+}
+
 /* Animations */
 @keyframes pulse-score {
     0% { transform: scale(1); }
@@ -167,6 +209,19 @@ body, html {
     color: #fff;
     max-width: 500px;
     width: 90%;
+    max-height: 95vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--player-cyan) transparent;
+}
+
+.game-over-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.game-over-box::-webkit-scrollbar-thumb {
+    background-color: var(--player-cyan);
+    border-radius: 10px;
 }
 
 .game-over-box h2 {
@@ -216,12 +271,49 @@ body, html {
     text-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
 }
 
+@media (max-height: 500px) {
+    .game-over-box, .pause-box {
+        padding: 1.5rem !important;
+        transform: scale(0.8);
+    }
+    .game-over-box h2, .pause-box h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .leaderboard-container {
+        max-height: 180px;
+        padding: 5px !important;
+    }
+    .game-over-box {
+        padding: 1.5rem 1rem !important;
+    }
+}
+
 /* Leaderboard Styling */
 .leaderboard-container {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     padding: 15px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for leaderboard and boxes */
+.leaderboard-container::-webkit-scrollbar,
+.game-over-box::-webkit-scrollbar {
+    width: 4px;
+}
+
+.leaderboard-container::-webkit-scrollbar-track,
+.game-over-box::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-container::-webkit-scrollbar-thumb,
+.game-over-box::-webkit-scrollbar-thumb {
+    background: var(--player-cyan);
+    border-radius: 10px;
 }
 
 .leaderboard-item {
@@ -230,9 +322,40 @@ body, html {
     color: #fff !important;
     display: flex;
     justify-content: space-between;
-    padding: 8px 10px !important;
+    align-items: center;
+    padding: 10px 12px !important;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
+    gap: 10px;
+}
+
+.leaderboard-name-container {
+    flex: 1;
+    min-width: 0; /* Allow shrinking */
+}
+
+.leaderboard-player-name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 576px) {
+    .leaderboard-item {
+        padding: 6px 8px !important;
+    }
+    .leaderboard-player-name {
+        font-size: 0.75rem;
+    }
+    .leaderboard-score {
+        font-size: 0.8rem;
+    }
+    .leaderboard-rank {
+        margin-right: 8px !important;
+        font-size: 0.8rem;
+    }
 }
 
 .leaderboard-item:last-child {
