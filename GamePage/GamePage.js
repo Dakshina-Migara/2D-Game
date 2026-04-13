@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPaused = false;
     let spawnTimer;
     
-    const BULLET_SPEED = 14; 
+    let currentBulletSpeed = 14; 
     let currentBallSpeed = 3;
     const SPAWN_INTERVAL = 3000; 
-    const PLAYER_SPEED = 8;
+    let currentPlayerSpeed = 8;
     const keys = {};
 
     // Player local position tracking
@@ -69,10 +69,24 @@ document.addEventListener('DOMContentLoaded', () => {
         bullets.push({ element: bulletEl, x: bX, y: bY });
     }
 
+    const BALL_COLORS = [
+        { color: '#ff004c', glow: 'rgba(255, 0, 76, 0.6)' }, // Rose
+        { color: '#00f2ff', glow: 'rgba(0, 242, 255, 0.6)' }, // Cyan
+        { color: '#aaff00', glow: 'rgba(170, 255, 0, 0.6)' }, // Lime
+        { color: '#bc13fe', glow: 'rgba(188, 19, 254, 0.6)' }, // Purple
+        { color: '#ff6b00', glow: 'rgba(255, 107, 0, 0.6)' }, // Orange
+        { color: '#009dff', glow: 'rgba(0, 157, 255, 0.6)' }  // Sky Blue
+    ];
+
     function createBall() {
         if (isGameOver || isPaused || balls.length > 0) return;
         const ballEl = document.createElement('div');
         ballEl.className = 'target-orb';
+        
+        // Random Color Selection
+        const randomColorObj = BALL_COLORS[Math.floor(Math.random() * BALL_COLORS.length)];
+        ballEl.style.backgroundColor = randomColorObj.color;
+        ballEl.style.boxShadow = `0 0 30px ${randomColorObj.glow}`;
         
         const bX = Math.random() * (window.innerWidth - 40);
         const bY = -50; 
@@ -96,11 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 0. Move Player (Keyboard)
         let moved = false;
         if (keys['a'] || keys['A'] || keys['ArrowLeft']) {
-            playerX -= PLAYER_SPEED;
+            playerX -= currentPlayerSpeed;
             moved = true;
         }
         if (keys['d'] || keys['D'] || keys['ArrowRight']) {
-            playerX += PLAYER_SPEED;
+            playerX += currentPlayerSpeed;
             moved = true;
         }
 
@@ -113,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Move bullets
         for (let i = bullets.length - 1; i >= 0; i--) {
             const b = bullets[i];
-            b.y -= BULLET_SPEED;
+            b.y -= currentBulletSpeed;
             b.element.style.top = `${b.y}px`;
             
             if (b.y < -50) {
@@ -177,9 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
         currentScore += points;
         scoreVal.textContent = currentScore;
         
-        // Difficulty increase: Speed up every 20 points
-        if (currentScore > 0 && currentScore % 20 === 0) {
-            currentBallSpeed += 1; // Increase speed by 1 unit
+        // Difficulty increase: Speed up everything every 15 points
+        if (currentScore > 0 && currentScore % 15 === 0) {
+            currentBallSpeed += 1;   // Increase ball drop speed
+            currentPlayerSpeed += 1; // Increase shooter movement speed
+            currentBulletSpeed += 2; // Increase bullet flight speed
         }
 
         const parent = scoreVal.parentElement;
