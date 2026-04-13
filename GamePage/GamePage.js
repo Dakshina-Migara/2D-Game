@@ -69,10 +69,24 @@ document.addEventListener('DOMContentLoaded', () => {
         bullets.push({ element: bulletEl, x: bX, y: bY });
     }
 
+    const BALL_COLORS = [
+        { color: '#ff004c', glow: 'rgba(255, 0, 76, 0.6)' }, // Rose
+        { color: '#00f2ff', glow: 'rgba(0, 242, 255, 0.6)' }, // Cyan
+        { color: '#aaff00', glow: 'rgba(170, 255, 0, 0.6)' }, // Lime
+        { color: '#bc13fe', glow: 'rgba(188, 19, 254, 0.6)' }, // Purple
+        { color: '#ff6b00', glow: 'rgba(255, 107, 0, 0.6)' }, // Orange
+        { color: '#009dff', glow: 'rgba(0, 157, 255, 0.6)' }  // Sky Blue
+    ];
+
     function createBall() {
         if (isGameOver || isPaused || balls.length > 0) return;
         const ballEl = document.createElement('div');
         ballEl.className = 'target-orb';
+        
+        // Random Color Selection
+        const randomColorObj = BALL_COLORS[Math.floor(Math.random() * BALL_COLORS.length)];
+        ballEl.style.backgroundColor = randomColorObj.color;
+        ballEl.style.boxShadow = `0 0 30px ${randomColorObj.glow}`;
         
         const bX = Math.random() * (window.innerWidth - 40);
         const bY = -50; 
