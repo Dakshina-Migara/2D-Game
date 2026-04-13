@@ -209,6 +209,19 @@ body, html {
     color: #fff;
     max-width: 500px;
     width: 90%;
+    max-height: 95vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--player-cyan) transparent;
+}
+
+.game-over-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.game-over-box::-webkit-scrollbar-thumb {
+    background-color: var(--player-cyan);
+    border-radius: 10px;
 }
 
 .game-over-box h2 {
@@ -264,11 +277,15 @@ body, html {
         transform: scale(0.8);
     }
     .game-over-box h2, .pause-box h2 {
-        font-size: 2rem !important;
+        font-size: 1.8rem !important;
         margin-bottom: 0.5rem !important;
     }
     .leaderboard-container {
-        display: none; /* Hide leaderboard on very short screens to save space */
+        max-height: 180px;
+        padding: 5px !important;
+    }
+    .game-over-box {
+        padding: 1.5rem 1rem !important;
     }
 }
 
@@ -278,6 +295,25 @@ body, html {
     border-radius: 12px;
     padding: 15px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for leaderboard and boxes */
+.leaderboard-container::-webkit-scrollbar,
+.game-over-box::-webkit-scrollbar {
+    width: 4px;
+}
+
+.leaderboard-container::-webkit-scrollbar-track,
+.game-over-box::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-container::-webkit-scrollbar-thumb,
+.game-over-box::-webkit-scrollbar-thumb {
+    background: var(--player-cyan);
+    border-radius: 10px;
 }
 
 .leaderboard-item {
