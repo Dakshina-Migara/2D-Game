@@ -62,7 +62,17 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script>
+        document.getElementById('startGameButton').addEventListener('click', function() {
+            // Add a slight delay for a potential transition effect or just navigate directly
+            this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Initializing...';
+            this.disabled = true;
+            
+            setTimeout(() => {
+                window.location.href = '../GamePage/GamePage.html';
+            }, 600);
+        });
+    </script>
 </body>
 
 </html>
