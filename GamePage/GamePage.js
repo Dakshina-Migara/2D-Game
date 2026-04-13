@@ -365,25 +365,37 @@ document.addEventListener('DOMContentLoaded', () => {
         gameOverScreen.classList.remove('d-none');
     }
     function restartGame() {
-        // Reset variables
+        // Reset core game state
         currentScore = 0;
         scoreVal.textContent = '0';
         isGameOver = false;
         isPaused = false;
-        bullets = [];
-        balls = [];
+        
+        // Reset difficulty and speeds to initial values
+        currentBulletSpeed = 14; 
+        currentBallSpeed = 3;
+        currentPlayerSpeed = 8;
         
         // Clean game surface
-        const allBullets = document.querySelectorAll('.bullet');
-        const allBalls = document.querySelectorAll('.target-orb');
-        allBullets.forEach(el => el.remove());
-        allBalls.forEach(el => el.remove());
+        bullets.forEach(b => {
+             if (b.element && b.element.parentNode) {
+                 gameSurface.removeChild(b.element);
+             }
+        });
+        balls.forEach(b => {
+            if (b.element && b.element.parentNode) {
+                gameSurface.removeChild(b.element);
+            }
+        });
+        
+        bullets = [];
+        balls = [];
         
         // Hide overlays
         document.getElementById('game-over').classList.add('d-none');
         document.getElementById('pause-screen').classList.add('d-none');
         
-        // Reset player
+        // Reset player position
         playerX = window.innerWidth / 2;
         updateViewDimensions();
         
@@ -391,8 +403,9 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(spawnTimer);
         spawnTimer = setInterval(createBall, SPAWN_INTERVAL);
         
-        // Resume loop
+        // Resume loop if it was stopped
         requestAnimationFrame(gameLoop);
+        console.log('Game Restarted - Difficulty Reset');
     }
     window.restartGame = restartGame;
 
