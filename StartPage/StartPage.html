@@ -79,11 +79,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('startGameButton').addEventListener('click', function() {
-            const nameInput = document.getElementById('playerName').value.trim();
-            const playerName = nameInput || 'Anonymous';
+            const nameField = document.getElementById('playerName');
+            const nameInput = nameField.value.trim();
             
+            // Validation: Prevent entry if name is empty
+            if (!nameInput) {
+                nameField.classList.add('is-invalid');
+                nameField.placeholder = "Pilot Name Required!";
+                nameField.style.borderColor = "var(--brand-accent)";
+                nameField.focus();
+                
+                // Shake effect for feedback
+                nameField.parentElement.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 300 });
+                
+                return;
+            }
+
             // Store name for the game session
-            sessionStorage.setItem('currentPlayerName', playerName);
+            sessionStorage.setItem('currentPlayerName', nameInput);
 
             // Add a slight delay for a potential transition effect or just navigate directly
             this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Initializing...';
@@ -92,6 +110,12 @@
             setTimeout(() => {
                 window.location.href = '../GamePage/GamePage.html';
             }, 600);
+        });
+
+        // Clear validation style on input
+        document.getElementById('playerName').addEventListener('input', function() {
+            this.classList.remove('is-invalid');
+            this.style.borderColor = "rgba(255,255,255,0.1)";
         });
 
         // Load High Scores for Hall of Fame
