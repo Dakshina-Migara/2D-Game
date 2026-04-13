@@ -210,17 +210,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function saveHighScore(score) {
-        const highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
-        const newScore = {
-            name: currentName,
-            score: score,
-            date: new Date().toLocaleDateString()
-        };
+        let highScores = JSON.parse(localStorage.getItem('shooter_high_scores')) || [];
         
-        highScores.push(newScore);
+        // Find if user already has a score
+        const existingIndex = highScores.findIndex(entry => entry.name.toLowerCase() === currentName.toLowerCase());
+        
+        if (existingIndex !== -1) {
+            // Update only if the new score is higher
+            if (score > highScores[existingIndex].score) {
+                highScores[existingIndex].score = score;
+                highScores[existingIndex].date = new Date().toLocaleDateString();
+            }
+        } else {
+            // Add new user
+            highScores.push({
+                name: currentName,
+                score: score,
+                date: new Date().toLocaleDateString()
+            });
+        }
+        
+        // Sort by score descending
         highScores.sort((a, b) => b.score - a.score);
         
-        // Keep only top 5
+        // Keep top 5
         const topScores = highScores.slice(0, 5);
         localStorage.setItem('shooter_high_scores', JSON.stringify(topScores));
     }
