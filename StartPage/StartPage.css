@@ -147,6 +147,22 @@ body::before {
     }
 }
 
+/* High Score List UI fixes */
+#topScoreList .name-span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+@media (max-width: 400px) {
+    #topScoreList .name-span {
+        max-width: 100px;
+    }
+}
+
 @keyframes slideUpEntrance {
     from {
         opacity: 0;

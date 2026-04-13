@@ -28,7 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Player local position tracking
     let playerX = window.innerWidth / 2;
-    const playerY = window.innerHeight - 60;
+    let playerY = window.innerHeight - 60;
+
+    function updateViewDimensions() {
+        const isMobile = window.innerWidth < 576;
+        playerY = window.innerHeight - (isMobile ? 50 : 60);
+        player.style.bottom = (isMobile ? 50 : 60) + 'px';
+        
+        // Keep player in bounds after resize
+        const boundary = isMobile ? 30 : 40;
+        playerX = Math.max(boundary, Math.min(window.innerWidth - boundary, playerX));
+        player.style.left = `${playerX}px`;
+    }
+
+    window.addEventListener('resize', updateViewDimensions);
+    updateViewDimensions();
 
 
     // 3. Control Handling (ESC: Pause, SPACE: Shoot, A/D/Arrows: Move)
@@ -45,6 +59,50 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keyup', (e) => {
         keys[e.key] = false;
     });
+
+    // 3.1 Mobile/Touch Controls
+    let isTouching = false;
+    gameSurface.addEventListener('touchstart', (e) => {
+        if (isGameOver || isPaused) return;
+        isTouching = true;
+        handleTouch(e);
+        // Start auto-shooting on touch
+        startAutoShoot();
+    }, { passive: false });
+
+    gameSurface.addEventListener('touchmove', (e) => {
+        if (isGameOver || isPaused) return;
+        handleTouch(e);
+        e.preventDefault(); // Prevent scrolling while playing
+    }, { passive: false });
+
+    gameSurface.addEventListener('touchend', () => {
+        isTouching = false;
+        stopAutoShoot();
+    });
+
+    function handleTouch(e) {
+        const touch = e.touches[0];
+        playerX = touch.clientX;
+        playerX = Math.max(30, Math.min(window.innerWidth - 30, playerX));
+        player.style.left = `${playerX}px`;
+    }
+
+    let autoShootInterval;
+    function startAutoShoot() {
+        if (autoShootInterval) return;
+        createBullet(); // Shoot immediately
+        autoShootInterval = setInterval(() => {
+            if (!isGameOver && !isPaused && isTouching) {
+                createBullet();
+            }
+        }, 350); // Slightly slower than manual tap but consistent
+    }
+
+    function stopAutoShoot() {
+        clearInterval(autoShootInterval);
+        autoShootInterval = null;
+    }
 
     function togglePause() {
         isPaused = !isPaused;
@@ -71,7 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
         bulletEl.style.top = `${bY}px`;
         gameSurface.appendChild(bulletEl);
         
-        bullets.push({ element: bulletEl, x: bX, y: bY });
+        bullets.push({ 
+            element: bulletEl, 
+            x: bX, 
+            y: bY,
+            width: 6,
+            height: 18 
+        });
     }
 
     const BALL_COLORS = [
@@ -93,14 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ballEl.style.backgroundColor = randomColorObj.color;
         ballEl.style.boxShadow = `0 0 30px ${randomColorObj.glow}`;
         
-        const bX = Math.random() * (window.innerWidth - 40);
+        const ballSize = window.innerWidth < 576 ? 30 : 40;
+        const bX = Math.random() * (window.innerWidth - ballSize);
         const bY = -50; 
         
         ballEl.style.left = `${bX}px`;
         ballEl.style.top = `${bY}px`;
         gameSurface.appendChild(ballEl);
         
-        balls.push({ element: ballEl, x: bX, y: bY });
+        balls.push({ element: ballEl, x: bX, y: bY, size: ballSize });
     }
 
     // Spawn balls at interval
@@ -125,7 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (moved) {
             // Keep on screen
-            playerX = Math.max(40, Math.min(window.innerWidth - 40, playerX));
+            const boundary = window.innerWidth < 576 ? 30 : 40;
+            playerX = Math.max(boundary, Math.min(window.innerWidth - boundary, playerX));
             player.style.left = `${playerX}px`;
         }
 
@@ -153,8 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let j = bullets.length - 1; j >= 0; j--) {
                 const bullet = bullets[j];
                 
-                if (bullet.x > ball.x && bullet.x < ball.x + 40 &&
-                    bullet.y > ball.y && bullet.y < ball.y + 40) {
+                if (bullet.x > ball.x && bullet.x < ball.x + ball.size &&
+                    bullet.y > ball.y && bullet.y < ball.y + ball.size) {
                     
                     gameSurface.removeChild(ball.element);
                     balls.splice(i, 1);
@@ -171,11 +237,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ballRemoved) continue;
 
             // Check if ball hits the shooter OR passes the player (GAME OVER)
+            const playerPadding = window.innerWidth < 576 ? 26 : 36;
             const playerHit = (
-                ball.x + 40 > playerX - 36 &&
-                ball.x < playerX + 36 &&
-                ball.y + 40 > playerY - 36 &&
-                ball.y < playerY + 36
+                ball.x + ball.size > playerX - playerPadding &&
+                ball.x < playerX + playerPadding &&
+                ball.y + ball.size > playerY - playerPadding &&
+                ball.y < playerY + playerPadding
             );
 
             if (playerHit || ball.y >= playerY + 50) {
@@ -253,14 +320,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('div');
             item.className = 'leaderboard-item list-group-item';
             item.innerHTML = `
-                <div class="d-flex flex-column">
+                <div class="leaderboard-name-container d-flex flex-column">
                     <div class="d-flex align-items-center">
-                        <span class="leaderboard-rank me-2">#${index + 1}</span>
-                        <span class="text-white fw-bold" style="font-size: 0.9rem;">${entry.name || 'Anonymous'}</span>
+                        <span class="leaderboard-rank">#${index + 1}</span>
+                        <span class="leaderboard-player-name text-white fw-bold">${entry.name || 'Anonymous'}</span>
                     </div>
                     <span class="leaderboard-date ms-4">${entry.date}</span>
                 </div>
-                <span class="leaderboard-score">${entry.score} pts</span>
+                <span class="leaderboard-score flex-shrink-0">${entry.score} pts</span>
             `;
             leaderboardList.appendChild(item);
         });

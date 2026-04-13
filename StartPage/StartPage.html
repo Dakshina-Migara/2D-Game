@@ -25,26 +25,40 @@
                             invaders</p>
 
                         <div class="game-controls-container p-3 mb-4 rounded-4">
-                            <div class="row g-2 align-items-center justify-content-center mb-3">
-                                <div class="col-auto">
-                                    <span class="game-key-hint">← →</span>
+                            <!-- Desktop Controls -->
+                            <div class="desktop-controls">
+                                <div class="row g-2 align-items-center justify-content-center mb-3">
+                                    <div class="col-auto">
+                                        <span class="game-key-hint">← →</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span class="game-accent-text small fw-light px-1">or</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span class="game-key-hint">A D</span>
+                                    </div>
+                                    <div class="col-auto ms-2">
+                                        <span class="game-accent-text small text-uppercase fw-bold">Move</span>
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <span class="game-accent-text small fw-light px-1">or</span>
-                                </div>
-                                <div class="col-auto">
-                                    <span class="game-key-hint">A D</span>
-                                </div>
-                                <div class="col-auto ms-2">
-                                    <span class="game-accent-text small text-uppercase fw-bold">Move</span>
+                                <div class="row g-2 align-items-center justify-content-center">
+                                    <div class="col-auto">
+                                        <span class="game-key-hint px-3">SPACE</span>
+                                    </div>
+                                    <div class="col-auto ms-2">
+                                        <span class="game-accent-text small text-uppercase fw-bold">Shoot</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row g-2 align-items-center justify-content-center">
-                                <div class="col-auto">
-                                    <span class="game-key-hint px-3">SPACE</span>
-                                </div>
-                                <div class="col-auto ms-2">
-                                    <span class="game-accent-text small text-uppercase fw-bold">Shoot</span>
+                            <!-- Mobile Controls Hint -->
+                            <div class="mobile-controls d-none mt-1">
+                                <div class="row g-2 align-items-center justify-content-center">
+                                    <div class="col-auto">
+                                        <span class="game-key-hint px-3">DRAG</span>
+                                    </div>
+                                    <div class="col-auto ms-2">
+                                        <span class="game-accent-text small text-uppercase fw-bold">Move & Shoot</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -130,14 +144,22 @@
 
             // Show top 3
             scoreList.innerHTML = highScores.slice(0, 3).map((s, i) => `
-                <div class="d-flex justify-content-between mb-1">
-                    <span><span class="text-info">#${i+1}</span> ${s.name || 'Anonymous'}</span>
-                    <span class="fw-bold text-white">${s.score} pts</span>
+                <div class="d-flex justify-content-between align-items-center mb-1 overflow-hidden">
+                    <span class="text-truncate me-2"><span class="text-info">#${i+1}</span> <span class="name-span">${s.name || 'Anonymous'}</span></span>
+                    <span class="fw-bold text-white flex-shrink-0">${s.score} pts</span>
                 </div>
             `).join('');
         }
 
-        document.addEventListener('DOMContentLoaded', loadHighScores);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHighScores();
+            
+            // Detect touch device
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                document.querySelector('.mobile-controls').classList.remove('d-none');
+                document.querySelector('.desktop-controls').classList.add('d-none');
+            }
+        });
     </script>
 </body>
 

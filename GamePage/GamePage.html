@@ -17,7 +17,7 @@
 
         <!-- Score component -->
         <div class="score-card px-4 py-2 text-center shadow-lg">
-            <span id="player-display-name" class="d-block small text-white opacity-75 mb-1" style="font-weight: 500;">Pilot</span>
+            <span id="player-display-name" class="d-block small text-white opacity-75 mb-1 text-truncate" style="font-weight: 500; max-width: 120px; margin: 0 auto;">Pilot</span>
             <span class="score-label d-block text-uppercase">Score</span>
             <span id="score-value" class="score-number d-block">0</span>
         </div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center gap-3">
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 gap-sm-3">
                     <button class="btn btn-primary btn-lg px-4" onclick="location.reload()">Restart</button>
                     <button class="btn btn-outline-light btn-lg px-4" onclick="window.location.href='../StartPage/StartPage.html'">Go to Home</button>
                 </div>
