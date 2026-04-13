@@ -169,8 +169,10 @@
             
             // Detect touch device
             if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                document.querySelector('.mobile-controls').classList.remove('d-none');
-                document.querySelector('.desktop-controls').classList.add('d-none');
+                const mobileControls = document.querySelector('.mobile-controls');
+                const desktopControls = document.querySelector('.desktop-controls');
+                if (mobileControls) mobileControls.classList.remove('d-none');
+                if (desktopControls) desktopControls.classList.add('d-none');
             }
         });
     </script>
