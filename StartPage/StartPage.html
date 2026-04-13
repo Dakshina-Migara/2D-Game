@@ -76,9 +76,11 @@
                             </button>
                         </div>
 
-                        <!-- High Score Preview -->
                         <div id="highScorePreview" class="mt-4 p-3 rounded-4" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);">
-                            <h6 class="text-uppercase small fw-bold mb-2" style="color: var(--brand-primary); letter-spacing: 2px;">Hall of Fame</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="text-uppercase small fw-bold mb-0" style="color: var(--brand-primary); letter-spacing: 2px;">Hall of Fame</h6>
+                                <button onclick="clearHighScores()" class="btn btn-link p-0 text-decoration-none text-muted small" style="font-size: 0.65rem; transition: color 0.3s;">Clear Records</button>
+                            </div>
                             <div id="topScoreList" class="small">
                                 <!-- Top scores will be loaded here -->
                                 <span class="text-muted">Loading scores...</span>
@@ -149,6 +151,13 @@
                     <span class="fw-bold text-white flex-shrink-0">${s.score} pts</span>
                 </div>
             `).join('');
+        }
+
+        function clearHighScores() {
+            if (confirm('Are you sure you want to delete all high scores?')) {
+                localStorage.removeItem('shooter_high_scores');
+                loadHighScores();
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {

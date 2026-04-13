@@ -333,6 +333,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function clearHighScores() {
+        if (confirm('Are you sure you want to delete all high scores?')) {
+            localStorage.removeItem('shooter_high_scores');
+            displayLeaderboard();
+        }
+    }
+    // Expose for HTML button
+    window.clearHighScores = clearHighScores;
+
     function endGame() {
         isGameOver = true;
         clearInterval(spawnTimer);

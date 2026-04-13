@@ -38,7 +38,10 @@
                 
                 <!-- Leaderboard Section -->
                 <div class="leaderboard-container mb-4 text-start">
-                    <h5 class="text-uppercase text-center mb-3" style="color: var(--score-accent); letter-spacing: 2px;">High Scores</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-uppercase mb-0" style="color: var(--score-accent); letter-spacing: 2px; font-size: 0.9rem;">High Scores</h5>
+                        <button onclick="clearHighScores()" class="btn btn-link p-0 text-decoration-none text-muted small" style="font-size: 0.6rem;">Reset</button>
+                    </div>
                     <div id="leaderboard-list" class="list-group list-group-flush">
                         <!-- Scores will be injected here -->
                     </div>
